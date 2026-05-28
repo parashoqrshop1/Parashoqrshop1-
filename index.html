@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ParaShoqr Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .shop-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: white;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shop-logo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .shop-title h1 {
+      font-size: 1.5em;
+      margin-bottom: 5px;
+    }
+
+    .shop-title p {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    .contact-btn {
+      padding: 12px 25px;
+      background: white;
+      color: #667eea;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .contact-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* FEATURED CAROUSEL */
+    .carousel-section {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 2em;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #333;
+    }
+
+    .carousel {
+      display: flex;
+      gap: 30px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding-bottom: 20px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .featured-card {
+      min-width: 300px;
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .featured-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .featured-content {
+      padding: 20px;
+    }
+
+    .featured-content h3 {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .featured-price {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #667eea;
+    }
+
+    /* FILTERS */
+    .filters {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      padding: 12px 30px;
+      background: white;
+      border: 2px solid #667eea;
+      color: #667eea;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #667eea;
+      color: white;
+    }
+
+    /* PRODUCTS GRID */
+    .products-section {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      position: relative;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #667eea;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+
+    .product-content {
+      padding: 20px;
+    }
+
+    .product-content h3 {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .product-content p {
+      color: #666;
+      font-size: 0.95em;
+      margin-bottom: 15px;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product-price {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #667eea;
+    }
+
+    .view-btn {
+      padding: 10px 20px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .view-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 100px 20px;
+      color: #999;
+    }
+
+    .footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="shop-logo">
+        <img id="shopLogo" src="https://via.placeholder.com/60" alt="Shop Logo">
+      </div>
+      <div class="shop-title">
+        <h1>🛍️ ParaShoqr</h1>
+        <p>Your Shopping Destination</p>
+      </div>
+    </div>
+    <button class="contact-btn" onclick="contactSeller()">📞 Contact Seller</button>
+  </div>
+
+  <!-- FEATURED CAROUSEL -->
+  <div class="carousel-section">
+    <h2 class="section-title">✨ Featured Products</h2>
+    <div class="carousel" id="featuredCarousel">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY FILTERS -->
+  <div class="filters" id="categoryFilters">
+    <button class="filter-btn active" data-category="all" onclick="filterCategory('all')">All Products</button>
+  </div>
+
+  <!-- PRODUCTS GRID -->
+  <div class="products-section">
+    <h2 class="section-title">Our Collection</h2>
+    <div id="productsGrid" class="products-grid">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>© 2024 ParaShoqr - Powered by Innovation</p>
+  </div>
+
+  <script>
+    // ⚠️ REPLACE THIS WITH YOUR WORKER URL
+    const WORKER_URL = "https://parashoqr-api.akjshopqr.workers.dev/";
+
+    let allProducts = [];
+    let shopConfig = {};
+    let currentCategory = 'all';
+
+    // ══════════════════════════════════════════════════════
+    // FETCH DATA
+    // ══════════════════════════════════════════════════════
+
+    async function loadData() {
+      try {
+        // Get config
+        const configRes = await fetch(`${WORKER_URL}/config`);
+        shopConfig = await configRes.json();
+        
+        document.getElementById('shopLogo').src = shopConfig.logo;
+
+        // Get products
+        const productsRes = await fetch(`${WORKER_URL}/products`);
+        allProducts = await productsRes.json();
+
+        displayFeaturedCarousel();
+        populateFilters();
+        displayProducts();
+
+      } catch (error) {
+        document.getElementById('productsGrid').innerHTML = `
+          <div class="empty-state">
+            <h2>⚠️ Error Loading Products</h2>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    // ══════════════════════════════════════════════════════
+    // FEATURED CAROUSEL
+    // ══════════════════════════════════════════════════════
+
+    function displayFeaturedCarousel() {
+      const carousel = document.getElementById('featuredCarousel');
+      const featured = allProducts.slice(0, 5);
+
+      if (featured.length === 0) {
+        carousel.innerHTML = '<p>No featured products</p>';
+        return;
+      }
+
+      carousel.innerHTML = featured.map(product => `
+        <div class="featured-card" onclick="viewProduct(${product.id})">
+          <img src="${product.images[0] || 'https://via.placeholder.com/300'}" alt="${product.name}">
+          <div class="featured-content">
+            <h3>${product.name}</h3>
+            <div class="featured-price">₹${product.price}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // CATEGORY FILTERS
+    // ══════════════════════════════════════════════════════
+
+    function populateFilters() {
+      const filtersContainer = document.getElementById('categoryFilters');
+      const categories = [...new Set(allProducts.map(p => p.category))];
+
+      categories.forEach(category => {
+        if (category) {
+          const btn = document.createElement('button');
+          btn.className = 'filter-btn';
+          btn.dataset.category = category;
+          btn.textContent = category;
+          btn.onclick = () => filterCategory(category);
+          filtersContainer.appendChild(btn);
+        }
+      });
+    }
+
+    function filterCategory(category) {
+      currentCategory = category;
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.category === category) {
+          btn.classList.add('active');
+        }
+      });
+
+      displayProducts();
+    }
+
+    // ══════════════════════════════════════════════════════
+    // DISPLAY PRODUCTS
+    // ══════════════════════════════════════════════════════
+
+    function displayProducts() {
+      const grid = document.getElementById('productsGrid');
+
+      let filtered = currentCategory === 'all' 
+        ? allProducts 
+        : allProducts.filter(p => p.category === currentCategory);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <h2>📦 No Products Found</h2>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(product => `
+        <div class="product-card" onclick="viewProduct(${product.id})">
+          <div style="position: relative;">
+            <img src="${product.images[0] || 'https://via.placeholder.com/300'}" alt="${product.name}" class="product-image">
+            <div class="product-badge">${product.category}</div>
+          </div>
+          <div class="product-content">
+            <h3>${product.name}</h3>
+            <p>${product.description.substring(0, 80)}${product.description.length > 80 ? '...' : ''}</p>
+            <div class="product-footer">
+              <div class="product-price">₹${product.price}</div>
+              <button class="view-btn" onclick="event.stopPropagation(); viewProduct(${product.id})">View</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // CONTACT SELLER
+    // ══════════════════════════════════════════════════════
+
+    function contactSeller() {
+      const phone = shopConfig.phone;
+      const message = "Hi! I'm interested in your products.";
+      const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // VIEW PRODUCT DETAILS
+    // ══════════════════════════════════════════════════════
+
+    function viewProduct(id) {
+      const product = allProducts.find(p => p.id === id);
+      if (!product) return;
+
+      const imageGallery = product.images.map(img => `<img src="${img}" style="max-width:200px; margin:10px 0; border-radius:10px;">`).join('');
+      
+      alert(`
+🛍️ ${product.name}
+
+💰 Price: ₹${product.price}
+📦 Category: ${product.category}
+
+📝 Description:
+${product.description}
+
+📸 Product Images:
+${product.images.length} images available
+
+${product.aiImage ? '🤖 AI Model Image: Available' : ''}
+
+📞 Contact Seller for details
+      `);
+    }
+
+    // ══════════════════════════════════════════════════════
+    // INITIALIZE
+    // ══════════════════════════════════════════════════════
+
+    window.addEventListener('load', loadData);
+
+  </script>
+
+</body>
+</html>
