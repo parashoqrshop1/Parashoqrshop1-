@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ParaShoqr Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    #loginScreen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .login-box h1 {
+      color: #667eea;
+      margin-bottom: 30px;
+      font-size: 2em;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    #dashboard {
+      display: none;
+    }
+
+    .header {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      color: #333;
+      font-size: 1.8em;
+    }
+
+    .btn-logout {
+      padding: 10px 20px;
+      background: #ff4757;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .file-upload-label {
+      display: block;
+      padding: 12px;
+      background: #f8f9fa;
+      border: 2px dashed #667eea;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      color: #667eea;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    #imagePreview {
+      max-width: 200px;
+      max-height: 200px;
+      margin: 15px auto;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .btn-success {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #11998e, #38ef7d);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+    }
+
+    .products-list {
+      grid-column: 1 / -1;
+    }
+
+    .product-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      margin-bottom: 10px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .product-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+    }
+
+    .product-info img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .product-details h3 {
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .product-price {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #667eea;
+      margin: 0 20px;
+    }
+
+    .btn-delete {
+      padding: 10px 20px;
+      background: #ff4757;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loginScreen">
+    <div class="login-box">
+      <h1>🛍️ ParaShoqr Admin</h1>
+      <form id="loginForm">
+        <div class="input-group">
+          <input type="password" id="passwordInput" placeholder="Enter Password" required>
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="dashboard">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      
+      <div class="header">
+        <h1>📦 Product Dashboard</h1>
+        <button class="btn-logout" onclick="logout()">Logout</button>
+      </div>
+
+      <div class="grid">
+        
+        <div class="card">
+          <h2>➕ Add New Product</h2>
+          <form id="productForm">
+            
+            <div class="form-group">
+              <label>Product Name *</label>
+              <input type="text" name="name" required placeholder="e.g., Nike Shoes">
+            </div>
+
+            <div class="form-group">
+              <label>Price (₹) *</label>
+              <input type="number" name="price" required placeholder="e.g., 2999" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+              <label>Category *</label>
+              <input type="text" name="category" required placeholder="e.g., Shoes">
+            </div>
+
+            <div class="form-group">
+              <label>Description</label>
+              <textarea name="description" placeholder="Product details..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Seller Phone (WhatsApp)</label>
+              <input type="text" name="sellerPhone" placeholder="919876543210">
+            </div>
+
+            <div class="form-group">
+              <label>Image 1 (Main) *</label>
+              <label class="file-upload-label" for="imageUpload1">📸 Click to Upload</label>
+              <input type="file" id="imageUpload1" accept="image/*" style="display:none;">
+              <img id="imagePreview1" alt="Preview">
+              <input type="hidden" name="image1" id="imageUrlInput1">
+            </div>
+
+            <div class="form-group">
+              <label>Image 2</label>
+              <label class="file-upload-label" for="imageUpload2">📸 Click to Upload</label>
+              <input type="file" id="imageUpload2" accept="image/*" style="display:none;">
+              <img id="imagePreview2" alt="Preview" style="max-width:100px; max-height:100px; margin-bottom:10px; display:none;">
+              <input type="hidden" name="image2" id="imageUrlInput2">
+            </div>
+
+            <button type="submit" class="btn-success" id="submitBtn">Add Product</button>
+
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>📊 Quick Stats</h2>
+          <div style="padding: 20px 0;">
+            <div style="margin-bottom: 20px;">
+              <h3 style="font-size: 2.5em; color: #667eea; margin-bottom: 5px;" id="totalProducts">0</h3>
+              <p style="color: #999;">Total Products</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card products-list">
+          <h2>📋 All Products</h2>
+          <div id="productsList"></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ⚠️ REPLACE THIS WITH YOUR WORKER URL
+    const WORKER_URL = "https://parashoqr-api.akjshopqr.workers.dev/";
+
+    const CLOUDINARY = {
+      cloudName: "dxm39ikfd",
+      uploadPreset: "parashoqr_products"
+    };
+
+    let adminPassword = "";
+    let allProducts = [];
+
+    // ══════════════════════════════════════════════════════
+    // LOGIN
+    // ══════════════════════════════════════════════════════
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const password = document.getElementById('passwordInput').value;
+      
+      try {
+        const response = await fetch(`${WORKER_URL}/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          adminPassword = password;
+          sessionStorage.setItem('adminPassword', password);
+          document.getElementById('loginScreen').style.display = 'none';
+          document.getElementById('dashboard').style.display = 'block';
+          loadProducts();
+        } else {
+          alert('❌ Invalid password!');
+        }
+      } catch (error) {
+        alert('❌ Login failed: ' + error.message);
+      }
+    });
+
+    window.addEventListener('load', function() {
+      const savedPassword = sessionStorage.getItem('adminPassword');
+      if (savedPassword) {
+        adminPassword = savedPassword;
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        loadProducts();
+      }
+    });
+
+    function logout() {
+      sessionStorage.removeItem('adminPassword');
+      location.reload();
+    }
+
+    // ══════════════════════════════════════════════════════
+    // IMAGE UPLOAD
+    // ══════════════════════════════════════════════════════
+
+    document.getElementById('imageUpload1').addEventListener('change', async function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview1');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+
+      await uploadToCloudinary(file, 'image1', 'imagePreview1');
+    });
+
+    document.getElementById('imageUpload2').addEventListener('change', async function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview2');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+
+      await uploadToCloudinary(file, 'image2', 'imagePreview2');
+    });
+
+    async function uploadToCloudinary(file, inputName, previewId) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', CLOUDINARY.uploadPreset);
+
+      try {
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY.cloudName}/image/upload`,
+          {
+            method: 'POST',
+            body: formData
+          }
+        );
+
+        const data = await response.json();
+        
+        if (data.secure_url) {
+          document.getElementById('imageUrlInput' + inputName.slice(-1)).value = data.secure_url;
+        }
+      } catch (error) {
+        alert('Image upload failed: ' + error.message);
+      }
+    }
+
+    // ══════════════════════════════════════════════════════
+    // ADD PRODUCT
+    // ══════════════════════════════════════════════════════
+
+    document.getElementById('productForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      formData.append('password', adminPassword);
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Adding...';
+
+      try {
+        const response = await fetch(`${WORKER_URL}/products`, {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert('✅ Product added!');
+          this.reset();
+          document.getElementById('imagePreview1').style.display = 'none';
+          document.getElementById('imagePreview2').style.display = 'none';
+          loadProducts();
+        } else {
+          alert('❌ Error: ' + result.error);
+        }
+      } catch (error) {
+        alert('Failed: ' + error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Add Product';
+      }
+    });
+
+    // ══════════════════════════════════════════════════════
+    // LOAD PRODUCTS
+    // ══════════════════════════════════════════════════════
+
+    async function loadProducts() {
+      try {
+        const response = await fetch(`${WORKER_URL}/products`);
+        allProducts = await response.json();
+        
+        displayProducts();
+        document.getElementById('totalProducts').textContent = allProducts.length;
+      } catch (error) {
+        console.error('Failed to load:', error);
+      }
+    }
+
+    function displayProducts() {
+      const container = document.getElementById('productsList');
+      
+      if (allProducts.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#999;">No products yet</p>';
+        return;
+      }
+
+      container.innerHTML = allProducts.map(product => `
+        <div class="product-item">
+          <div class="product-info">
+            <img src="${product.images[0] || 'https://via.placeholder.com/60'}" alt="${product.name}">
+            <div class="product-details">
+              <h3>${product.name}</h3>
+              <p>${product.category}</p>
+            </div>
+          </div>
+          <div class="product-price">₹${product.price}</div>
+          <button class="btn-delete" onclick="deleteProduct(${product.id})">Delete</button>
+        </div>
+      `).join('');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // DELETE PRODUCT
+    // ══════════════════════════════════════════════════════
+
+    async function deleteProduct(id) {
+      if (!confirm('Delete this product?')) return;
+
+      try {
+        const response = await fetch(
+          `${WORKER_URL}/products/${id}?password=${adminPassword}`,
+          { method: 'DELETE' }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert('✅ Deleted!');
+          loadProducts();
+        } else {
+          alert('❌ Error: ' + result.error);
+        }
+      } catch (error) {
+        alert('Failed: ' + error.message);
+      }
+    }
+
+  </script>
+
+</body>
+</html>
